@@ -20,7 +20,7 @@ face_cascade = cv2.CascadeClassifier('haar_cascade_files/haarcascade_frontalface
 name = input("Enter your name: ")
 
 #Prompt the user to enter the room access (comma-separated)
-access_input =("Enter room access (comma-separated): ")
+access_input =input("Enter room access (comma-separated): ")
 access_list = access_input.split(',')
 
 #Initialize an empty list to store the face data
@@ -44,7 +44,7 @@ while True:
 		cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 225, 0), 2)
 
 		#Encode the face region of interest (ROI),  using face recognition
-		rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BRG2RGB)
+		rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		face_encodings = face_recognition.face_encodings(rgb_frame, [(y, x+w, y+h, x)])
 
 		
@@ -63,7 +63,7 @@ cap.release()
 cv2.destroyAllWindows()
 
 now = datetime.now()
-file_name = f"faces/{now/.strftime('%Y-%m-%d-%H-%M-%s')}-{name}.pickle"
+file_name = f"faces/{now.strftime('%Y-%m-%d-%H-%M-%s')}-{name}.pickle"
 with open(file_name, 'wb') as f:
 	pickle.dump(face_data, f)
 print(f"Face data for '{name}' saved successfully!")
